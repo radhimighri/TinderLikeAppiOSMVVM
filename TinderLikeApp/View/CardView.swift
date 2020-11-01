@@ -9,6 +9,9 @@
 import UIKit
 import SDWebImage
 
+protocol CardViewDelegate: class {
+    func cardView(_ view: CardView, wantsToShowProfileFor user: User)
+}
 enum SwipeDirection: Int {
     case left = -1
     case right = 1
@@ -17,8 +20,10 @@ enum SwipeDirection: Int {
 class CardView: UIView {
     
     //MARK:- Properties
-    private let gradientLayer = CAGradientLayer()
+    weak var delegate: CardViewDelegate?
     
+    private let gradientLayer = CAGradientLayer()
+    private lazy var barStackView = SegmentedBarView(numberOfSegments: viewModel.imageURLs.count)
     private let viewModel: CardViewModel
     
     private let imageView: UIImageView = {
@@ -38,6 +43,7 @@ class CardView: UIView {
     private lazy var infoButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "info_icon").withRenderingMode(.alwaysOriginal) , for: .normal)
+        button.addTarget(self, action: #selector(handleShowProfile), for: .touchUpInside)
         return button
     }()
     
@@ -56,6 +62,7 @@ class CardView: UIView {
         addSubview(imageView)
         imageView.fillSuperview()
         
+        configureBarStackView()
         // adding the gradient layer before adding the info label
         configureGradientLayer()
         
@@ -79,6 +86,11 @@ class CardView: UIView {
     }
     
     //MARK:- Actions (Selectors)
+    
+    @objc func handleShowProfile() {
+        delegate?.cardView(self, wantsToShowProfileFor: viewModel.user)
+    }
+    
     @objc func handlePanGesture(sender: UIPanGestureRecognizer) {
         switch sender.state {
         
@@ -112,7 +124,14 @@ class CardView: UIView {
         }
         
 //        imageView.image = viewModel.imageToShow
-
+        imageView.sd_setImage(with: viewModel.imageUrl)
+        
+        //before using the SegmentedBarView :
+//        barStackView.arrangedSubviews.forEach ({ $0.backgroundColor = .barDeselectedColor })
+//        barStackView.arrangedSubviews[viewModel.index].backgroundColor = .white
+        
+        //after using the SegmentedBarView :
+        barStackView.setHighlighted(index: viewModel.index)
     }
     
     //MARK:- Helpers Functions
@@ -149,6 +168,22 @@ class CardView: UIView {
                 self.removeFromSuperview()
             }
         }
+    }
+    
+    func configureBarStackView() {
+        //before using the SegmentedBarView :
+//        (0..<viewModel.imageURLs.count).forEach { _ in
+//            let barView = UIView()
+//            barView.backgroundColor = .barDeselectedColor
+//            barStackView.addArrangedSubview(barView)
+//        }
+//        barStackView.arrangedSubviews.first?.backgroundColor = .white
+        
+        addSubview(barStackView)
+        barStackView.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor,
+                            paddingTop: 8, paddingLeft: 8, paddingRight: 8, height: 4)
+//        barStackView.spacing = 4
+//        barStackView.distribution = .fillEqually
     }
     
     func configureGradientLayer() {

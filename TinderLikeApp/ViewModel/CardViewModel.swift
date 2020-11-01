@@ -15,6 +15,7 @@ class CardViewModel {
     
     let userInfoText: NSAttributedString
     private var imageIndex = 0
+    var index: Int { return imageIndex }
     var imageUrl: URL?
     
     init(user: User) {
@@ -32,23 +33,22 @@ class CardViewModel {
     }
     
     func showNextPhoto() {
-//        print("DEBUG: Show Next Photo")
-//        guard imageIndex < user.images.count - 1 else {
-//            print("DEBUG: Image index trying to go out of bounds...")
-//            return
-//        }
-//        imageIndex += 1
-//        print("DEBUG: Image index is : \(imageIndex)")
-//        self.imageToShow = user.images[imageIndex]
+        print("DEBUG: Show Next Photo")
+        guard imageIndex < imageURLs.count - 1 else {
+            print("DEBUG: Image index trying to go out of bounds...")
+            return
+        }
+        imageIndex += 1
+        print("DEBUG: Image index is : \(imageIndex)")
+        imageUrl = URL(string: imageURLs[imageIndex])
 
     }
     
     func showPreviousPhoto() {
-//        print("DEBUG: Show Previous Photo")
+        print("DEBUG: Show Previous Photo")
         guard imageIndex > 0 else {return}
         imageIndex -= 1
-//        self.imageToShow = user.images[imageIndex]
-
+        imageUrl = URL(string: imageURLs[imageIndex])
     }
     
 }

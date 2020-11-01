@@ -12,4 +12,6 @@ let SETTINGS = "Settings"
 
 let SETTINGS_CELL = "SettingsCell"
 
+let PROFILE_CELL = "ProfileCell"
+
 let COLLECTION_USERS = Firestore.firestore().collection("users")

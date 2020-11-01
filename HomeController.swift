@@ -19,8 +19,8 @@ class HomeCotroller: UIViewController {
     
     private let deckView: UIView = {
         let view = UIView()
-        view.backgroundColor = .systemPink
-        view.layer.cornerRadius = 5
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 10
         return view
     }()
     
@@ -88,6 +88,7 @@ class HomeCotroller: UIViewController {
 //        print("DEBUG: Configure Cards now..")
         viewModels.forEach { (viewModel) in
             let cardView = CardView(viewModel: viewModel)
+            cardView.delegate = self // to activate the CardViewDelegate protocol
             deckView.addSubview(cardView)
             cardView.fillSuperview()
         }
@@ -136,7 +137,6 @@ extension HomeCotroller: HomeNavigationStackViewDelegate {
         print("DEBUG: Show Messages from home controller..")
     }
     
-    
 }
 
 //MARK:- SettingsControllerDelegate
@@ -154,6 +154,17 @@ extension HomeCotroller: SettingsControllerDelegate {
     func settingsController(_ controller: SettingsController, wantsToUpdate user: User) {
         controller.dismiss(animated: true, completion: nil)
         self.user = user // passing the user object from the settingsController to the homeController after dismissing
+    }
+    
+    
+}
+
+//MARK:- CardViewDelegate
+extension HomeCotroller: CardViewDelegate {
+    func cardView(_ view: CardView, wantsToShowProfileFor user: User) {
+        let controller = ProfileController(user: user) //passing the user that we have get it from the cardView to the profileController
+        controller.modalPresentationStyle = .fullScreen
+        present(controller, animated: true, completion: nil)
     }
     
     
