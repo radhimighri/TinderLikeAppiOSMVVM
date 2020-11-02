@@ -84,6 +84,20 @@ class HomeCotroller: UIViewController {
         }
     }
     
+    func saveSwipeAndCheckForMatch(forUser user: User, didLike: Bool) {
+        Service.saveSwipe(forUser: user, isLike: didLike) { error in
+            self.topCardView = self.cardViews.last
+            
+            guard didLike == true else {return}
+            
+            Service.checkIfMatchExists(forUser: user) { (didMatch) in
+                print("DEBUG: Users did match..")
+                self.presentMatchView(forUser: user)
+                
+            }
+        }
+    }
+    
     //MARK:- Helpers Functions
     func configureCards(){
 //        print("DEBUG: Configure Cards now..")
@@ -115,6 +129,8 @@ class HomeCotroller: UIViewController {
         stack.layoutMargins = .init(top: 0, left: 12, bottom: 0, right: 12)
         stack.bringSubviewToFront(deckView)
     }
+    
+    
     func presentLoginController() {
         DispatchQueue.main.async {
             let controller = LoginController()
@@ -140,6 +156,15 @@ class HomeCotroller: UIViewController {
             self.cardViews.remove(at: self.cardViews.count - 1)
             self.topCardView = self.cardViews.last
         }
+    }
+    
+    func presentMatchView(forUser user: User) {
+        guard let currentUser = self.user else {return}
+        let viewModel = MatchViewViewModel(currentUser: currentUser, matchedUser: user)
+        let matchView = MatchView(viewModel: viewModel)
+        matchView.delegate = self
+        view.addSubview(matchView)
+        matchView.fillSuperview()
     }
     
 }
@@ -190,8 +215,8 @@ extension HomeCotroller: CardViewDelegate {
         self.cardViews.removeAll(where: { view == $0 }) //update the dataModel (cardViews : array that contains all the users cards)
         
         guard let user = topCardView?.viewModel.user else {return}
-        Service.saveSwipe(forUser: user, isLike: didLikeUser)
-    
+        self.saveSwipeAndCheckForMatch(forUser: user, didLike: didLikeUser)
+
         self.topCardView = cardViews.last
     }
     
@@ -211,7 +236,7 @@ extension HomeCotroller: BottomControlsStackViewDelegate {
 //        print("DEBUG: Handle liking here..")
         guard let topCard = topCardView else {return}
         
-        Service.saveSwipe(forUser: topCard.viewModel.user, isLike: true)
+        self.saveSwipeAndCheckForMatch(forUser: topCard.viewModel.user, didLike: true)
 
         //if there is no topView the bellow func will not be called
         performSwipeAnimation(shouldLike: true)
@@ -224,8 +249,8 @@ extension HomeCotroller: BottomControlsStackViewDelegate {
 
         print("DEBUG: Handle disliking here..")
         performSwipeAnimation(shouldLike: false)
-                
-        Service.saveSwipe(forUser: topCard.viewModel.user, isLike: false)
+        // just saving the swipe we dont need to check for matching
+        Service.saveSwipe(forUser: topCard.viewModel.user, isLike: false, completion: nil)
 
     }
     
@@ -243,7 +268,7 @@ extension HomeCotroller: ProfileControllerDelegate {
         print("DEBUG: Handle liking user in home controller..")
         controller.dismiss(animated: true) { // it will not performe the swipe animation func until the dismissal animation had completed
             self.performSwipeAnimation(shouldLike: true)
-            Service.saveSwipe(forUser: user, isLike: true)
+            self.saveSwipeAndCheckForMatch(forUser: user, didLike: true)
         }
     }
     
@@ -251,7 +276,8 @@ extension HomeCotroller: ProfileControllerDelegate {
         print("DEBUG: Handle disliking user in home controller..")
         controller.dismiss(animated: true) {
             self.performSwipeAnimation(shouldLike: false)
-            Service.saveSwipe(forUser: user, isLike: false)
+            // just saving the swipe we dont need to check for matching
+            Service.saveSwipe(forUser: user, isLike: false, completion: nil)
         }
         
     }
@@ -273,3 +299,10 @@ extension HomeCotroller: AuthenticationDelegate {
     
 }
 
+extension HomeCotroller: MatchViewDelegate {
+    func matchView(_ view: MatchView, wantsToSendMessageTo user: User) {
+        print("DEBUG: Start conversation with : \(user.name)")
+    }
+    
+    
+}

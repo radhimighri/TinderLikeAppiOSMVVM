@@ -37,6 +37,10 @@
 		31B4F6CB254F3A2B00BE2153 /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B4F6CA254F3A2B00BE2153 /* ProfileCell.swift */; };
 		31B4F6CD254F4DF000BE2153 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B4F6CC254F4DF000BE2153 /* ProfileViewModel.swift */; };
 		31B4F6CF254F547600BE2153 /* SegmentedBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B4F6CE254F547600BE2153 /* SegmentedBarView.swift */; };
+		31B4F6D12550AB4100BE2153 /* MatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B4F6D02550AB4100BE2153 /* MatchView.swift */; };
+		31B4F6D32550B88500BE2153 /* KeepSwipingBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B4F6D22550B88500BE2153 /* KeepSwipingBtn.swift */; };
+		31B4F6D52550B8A300BE2153 /* SendMessageBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B4F6D42550B8A200BE2153 /* SendMessageBtn.swift */; };
+		31B4F6D72550C49A00BE2153 /* MatchViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B4F6D62550C49A00BE2153 /* MatchViewViewModel.swift */; };
 		CE3552DEC038F78C80DE6ABD /* Pods_TinderLikeApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AD2CABE207F79308FE5DD56 /* Pods_TinderLikeApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +78,10 @@
 		31B4F6CA254F3A2B00BE2153 /* ProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
 		31B4F6CC254F4DF000BE2153 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		31B4F6CE254F547600BE2153 /* SegmentedBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedBarView.swift; sourceTree = "<group>"; };
+		31B4F6D02550AB4100BE2153 /* MatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchView.swift; sourceTree = "<group>"; };
+		31B4F6D22550B88500BE2153 /* KeepSwipingBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeepSwipingBtn.swift; sourceTree = "<group>"; };
+		31B4F6D42550B8A200BE2153 /* SendMessageBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageBtn.swift; sourceTree = "<group>"; };
+		31B4F6D62550C49A00BE2153 /* MatchViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchViewViewModel.swift; sourceTree = "<group>"; };
 		3E47D5969773FE7D755D0716 /* Pods-TinderLikeApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinderLikeApp.release.xcconfig"; path = "Target Support Files/Pods-TinderLikeApp/Pods-TinderLikeApp.release.xcconfig"; sourceTree = "<group>"; };
 		6AD2CABE207F79308FE5DD56 /* Pods_TinderLikeApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TinderLikeApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -144,6 +152,7 @@
 				31B4F6B3254B70A100BE2153 /* AuthenticationViewModel.swift */,
 				31B4F6C3254DED3D00BE2153 /* SettingsViewModel.swift */,
 				31B4F6CC254F4DF000BE2153 /* ProfileViewModel.swift */,
+				31B4F6D62550C49A00BE2153 /* MatchViewViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -167,6 +176,9 @@
 				31B4F6B1254B62CD00BE2153 /* AuthButton.swift */,
 				31B4F6CA254F3A2B00BE2153 /* ProfileCell.swift */,
 				31B4F6CE254F547600BE2153 /* SegmentedBarView.swift */,
+				31B4F6D02550AB4100BE2153 /* MatchView.swift */,
+				31B4F6D22550B88500BE2153 /* KeepSwipingBtn.swift */,
+				31B4F6D42550B8A200BE2153 /* SendMessageBtn.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -346,6 +358,7 @@
 				31B4F6BE254CD80800BE2153 /* SettingsController.swift in Sources */,
 				31B4F6CF254F547600BE2153 /* SegmentedBarView.swift in Sources */,
 				31B4F6A52548D97700BE2153 /* CardView.swift in Sources */,
+				31B4F6D52550B8A300BE2153 /* SendMessageBtn.swift in Sources */,
 				31B4F6B2254B62CD00BE2153 /* AuthButton.swift in Sources */,
 				31B4F6B4254B70A100BE2153 /* AuthenticationViewModel.swift in Sources */,
 				31B4F6A32548C3C700BE2153 /* BottomControlsStackView.swift in Sources */,
@@ -356,9 +369,12 @@
 				31B4F6C9254F295000BE2153 /* ProfileController.swift in Sources */,
 				31B4F6BC254CA81500BE2153 /* Ref.swift in Sources */,
 				31B4F6A12547822300BE2153 /* HomeNavigationStackView.swift in Sources */,
+				31B4F6D32550B88500BE2153 /* KeepSwipingBtn.swift in Sources */,
+				31B4F6D12550AB4100BE2153 /* MatchView.swift in Sources */,
 				31B4F6AE254A43B900BE2153 /* RegistrationController.swift in Sources */,
 				31B4F6BA254C776F00BE2153 /* Service.swift in Sources */,
 				31B4F6CD254F4DF000BE2153 /* ProfileViewModel.swift in Sources */,
+				31B4F6D72550C49A00BE2153 /* MatchViewViewModel.swift in Sources */,
 				31B4F69D25477A9E00BE2153 /* HomeController.swift in Sources */,
 				31B4F6B0254B614B00BE2153 /* CustomTextField.swift in Sources */,
 				31B4F6C2254DEB9100BE2153 /* SettingsCell.swift in Sources */,
