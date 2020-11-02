@@ -9,8 +9,10 @@
 import UIKit
 import SDWebImage
 
+//we shouldn't put the API funcs inside Views so thats why we use those delegate methods
 protocol CardViewDelegate: class {
     func cardView(_ view: CardView, wantsToShowProfileFor user: User)
+    func cardView(_ view: CardView, didLikeUser: Bool)
 }
 enum SwipeDirection: Int {
     case left = -1
@@ -24,7 +26,7 @@ class CardView: UIView {
     
     private let gradientLayer = CAGradientLayer()
     private lazy var barStackView = SegmentedBarView(numberOfSegments: viewModel.imageURLs.count)
-    private let viewModel: CardViewModel
+    let viewModel: CardViewModel
     
     private let imageView: UIImageView = {
       let iv = UIImageView()
@@ -55,7 +57,7 @@ class CardView: UIView {
         
         imageView.sd_setImage(with: viewModel.imageUrl)
         
-        backgroundColor = .systemPurple
+        backgroundColor = .white
         layer.cornerRadius = 10
         clipsToBounds = true
         
@@ -165,7 +167,8 @@ class CardView: UIView {
         }) { _ in
 //            print("DEBUG: Animation did complete..")
             if shouldDismissCard {
-                self.removeFromSuperview()
+                let didLike = direction == .right //if .right : didLike : true, if .left:..false
+                self.delegate?.cardView(self, didLikeUser: didLike)
             }
         }
     }

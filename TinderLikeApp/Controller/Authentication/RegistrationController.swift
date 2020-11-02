@@ -11,6 +11,9 @@ import UIKit
 class RegistrationController: UIViewController {
     
     //MARK:- Properties
+
+    weak var delegate: AuthenticationDelegate?
+
     private var viewModel = RegistrationViewModel()
     
     private let selectPhotoButton: UIButton = {
@@ -117,7 +120,7 @@ class RegistrationController: UIViewController {
                 return
             }
             print("DEBUG: Successfully registred user..")
-            self.dismiss(animated: true, completion: nil)
+            self.delegate?.authenticationComplete()
         }
     }
     

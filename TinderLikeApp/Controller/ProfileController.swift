@@ -9,9 +9,16 @@
 import UIKit
 import SDWebImage
 
+protocol ProfileControllerDelegate: class {
+    func profileController(_ controller: ProfileController, didLikeUser user: User)
+    func profileController(_ controller: ProfileController, didDislikeUser user: User)
+
+}
 class ProfileController: UIViewController {
     //MARK:- Properties
     private let user: User
+    
+    weak var delegate: ProfileControllerDelegate?
     
     private lazy var viewModel = ProfileViewModel(user: user)
     
@@ -163,10 +170,13 @@ class ProfileController: UIViewController {
     //MARK:- Actions (#Selectors)
     
     @objc func handleDislike() {
+        delegate?.profileController(self, didDislikeUser: user)
     }
     @objc func handleSuperlike() {
+        
     }
     @objc func handleLike() {
+        delegate?.profileController(self, didLikeUser: user)
     }
     
     @objc func handleDismissal() {

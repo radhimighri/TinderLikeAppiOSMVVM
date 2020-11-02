@@ -8,9 +8,17 @@
 
 import UIKit
 
+//we've used this protocol to resolve the problm of refreshing the views with the data of the new logged user after instead of the previous one who's just logged out using the same device
+protocol AuthenticationDelegate: class {
+    func authenticationComplete()
+}
+
 class LoginController: UIViewController {
     
     //MARK:- Properties
+    
+    weak var delegate: AuthenticationDelegate?
+    
     private var viewModel = LoginViewModel()
     
     private let iconImageView: UIImageView = {
@@ -71,11 +79,13 @@ class LoginController: UIViewController {
                 return
             }
             print("DEBUG: The user is successfully logged in..")
-            self.dismiss(animated: true, completion: nil) //dismiss the loginController to show the homeController (initialy the root controller is the home one but while the user is not logged in we push the loginController to be on the top of the homeController so when we dismiss it out we will be able to show our main interface "homeController" again)
+            self.delegate?.authenticationComplete()
         }
     }
     @objc func handleShowRegistration() {
-        navigationController?.pushViewController(RegistrationController(), animated: true)
+        let controller = RegistrationController()
+        controller.delegate = delegate // assign the loginController delegate to the registrationController
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     //MARK:- Helpers Functions

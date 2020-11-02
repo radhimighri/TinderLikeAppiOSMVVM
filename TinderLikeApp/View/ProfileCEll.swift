@@ -1,5 +1,5 @@
 //
-//  ProfileCEll.swift
+//  ProfileCell.swift
 //  TinderLikeApp
 //
 //  Created by Radhi Mighri on 01/11/2020.
@@ -18,7 +18,6 @@ class ProfileCell: UICollectionViewCell {
         super.init(frame: frame)
         
         imageView.contentMode = .scaleAspectFill
-        imageView.image = #imageLiteral(resourceName: "jane2")
         
         addSubview(imageView)
         imageView.fillSuperview()
