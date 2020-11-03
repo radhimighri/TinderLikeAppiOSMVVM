@@ -114,8 +114,8 @@ class MatchView: UIView {
     //MARK:- Helper Functions
     
     func load2UsersData() {
-        descriptionLabel.text = viewModel.matchLabelText
         
+        descriptionLabel.text = viewModel.matchLabelText
         currentUserImageView.sd_setImage(with: viewModel.currentUserImageURL)
         matchedUserImageView.sd_setImage(with: viewModel.matchedUserImageURL)
 

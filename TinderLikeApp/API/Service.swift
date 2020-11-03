@@ -30,24 +30,40 @@ struct Service {
             .whereField("age", isGreaterThanOrEqualTo: minAge)
             .whereField("age", isLessThanOrEqualTo: maxAge)
         
-        
+        fetchSwipes { swipedUserIDs in
             query.getDocuments { (snapshot, error) in
-                guard let snapshot = snapshot else {return}
-                snapshot.documents.forEach({ document in
-                    let dictionary = document.data()
-                    let user = User(dictionary: dictionary)
-                    
-                    guard user.uid != Auth.auth().currentUser?.uid else {return}
-                    
-                    users.append(user)
-                    
-                    if users.count == snapshot.documents.count - 1 { //execute the completion(user) only one time : when we finish filling up the users array (-1 : minus the current user)
-                        completion(users)
-                    }
-                })
-            }
+                 guard let snapshot = snapshot else {return}
+                 snapshot.documents.forEach({ document in
+                     let dictionary = document.data()
+                     let user = User(dictionary: dictionary)
+                     
+                     guard user.uid != Auth.auth().currentUser?.uid else {return}
+                    guard swipedUserIDs[user.uid] == nil else {return}
+                     users.append(user)
+                     
+//                     if users.count == snapshot.documents.count - 1 { //execute the completion(user) only one time : when we finish filling up the users array (-1 : minus the current user)
+//                         completion(users)
+//                     }
+                 })
+                completion(users)
+             }
+        }
+ 
         }
     
+    private static func fetchSwipes(completion: @escaping([String : Bool]) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        
+        COLLECTION_SWIPES.document(uid).getDocument { (snapshot, err) in
+            guard let data = snapshot?.data() as? [String : Bool] else {
+                completion([String : Bool]())// if the current user didn't swipe yet, we just return an empty array String:Bool with the completion
+
+                return
+            }
+            
+            completion(data)
+        }
+    }
     
     static func saveUserData(user: User, completion: @escaping(Error?) -> Void ) {
         

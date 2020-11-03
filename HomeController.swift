@@ -165,6 +165,7 @@ class HomeCotroller: UIViewController {
         matchView.delegate = self
         view.addSubview(matchView)
         matchView.fillSuperview()
+        navigationController?.navigationBar.isHidden = true
     }
     
 }
